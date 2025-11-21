@@ -9,6 +9,12 @@ class UserService {
             throw ApiError.badRequest('All fields are required');
         }
 
+        const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if(!regexEmail.test(userdata.nome)) {
+            throw ApiError.badRequest('Invalid Email');
+        }
+
         const u = await this.usermodel.findOne({email: userdata.email});
 
         if(u) {
